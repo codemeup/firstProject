@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  
+<!--   <link rel="stylesheet" href="stylesheets/animations.css"> -->
+
+  <meta charset="UTF-8">
+  <title>Welcome to HoundHustler</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<% if (typeof user === 'undefined') { %> 
+<div class="container-fluid"> 
+  <div class="buffer"> 
+  <div class="buffer1"> 
+  <h1 class="element">WELCOME TO HOUNDHUSTLER</h1> 
+<!--   <h4>Please sign in with Facebook</h4> -->
+  <a href="/auth/facebook"><img src="/login-with-facebook.png" width="320" height="45"></a> 
+  </div> 
+<% } else { %> 
+  <div class="buffer2"> 
+  <h2>Hello, <%= user.name %></h2> 
+<!--   <h2>Hello, <%= user.fbid %>.</h2>
+  <h2>Hello, <%= user.contactEmails %>.</h2> -->
+  <br>
+  <br>
+  <h4>Welcome to HoundHustler. Discrete dog dealers, puppy pimps, canine chandlers.</h4>
+  <br>
+  <h5>We make it our mission to match trusted dog borrowers with lovable local pups for walkies, playtime, and holidays, giving their devoted owners more freedom and eager dogsitters a chance to share in the pleasure of qualitiy canine time. Please take a few moments to complete your sign-up process.</h5>
+  <span>
+      <h2>
+        <a href="/ownerSignup"> dog owner</a>
+      </h2>
+        <p> or </p>
+      <h2>
+        <a href="/loverSignup">dog lover?</a>
+      </h2>
+  </span>
+  <br>
+  <br>
+  <a id="logout" href="/logout">Logout</a>
+  <br>
+  </div>
+ 
+<% } %>
+ </div>
+ </div>
+ 
+</body>
+</html>
+
+
+

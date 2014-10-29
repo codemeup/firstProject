@@ -1,0 +1,40 @@
+<% include ../partials/header  %>
+    <h1><%= dog.name %>'s details</h1>
+    <% posts.forEach(function (dog) { %>
+    <div class="panel panel-default">
+	  <div class="panel-heading">Panel heading without title</div>
+	  <div class="panel-body">
+	    Panel content
+	  </div>
+	</div>
+
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3 class="panel-title"><%= dog.name %</h3>
+	  </div>
+	  <div class="panel-body">
+	    <p><p class="bold">Breed: </p><%= dog.breed %></p>
+	    <p><p class="bold">Age: </p><%= dog.age %></p>
+	    <p><p class="bold">Walkies Needs: </p><%= dog.walkiesNeeds %></p>
+	    <p><p class="bold">Guilty Pleasure: </p><%= dog.guiltyPleasure %></p>
+	    <p><p class="bold">About: </p><%= dog.about %></p>
+	  </div>
+	</div>
+
+
+
+
+
+
+
+
+    <div>
+	
+
+      <h2><a href="/dogs/<%=dog.id%>"><%= dog.name %></a></h2>
+      <p><%= dog.breed %></p>
+    </div>
+    <% }) %>
+  </body>
+</html>
+<% include ../partials/footer  %>

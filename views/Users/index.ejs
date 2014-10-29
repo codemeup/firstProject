@@ -1,0 +1,20 @@
+<% include ../partials/header  %>
+    
+    <h1>THE HUMANS</h1>
+      <% users.forEach(function (user) { %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+              <h5 class="panel-title"><%= user.name %></h5>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li><p>Favorite breed: <%= user.favoriteBreed %></p></li>
+               <li><p>Contact number: <%= user.contactNumber %></p></li>
+              <li><p>Contact email: <%= user.contactEmail %></p></li>
+              <li><p>Street address:<%= user.streetAddress %></p></li>
+              <li><p>ZIP code:<%= user.zipCode %></p></li>
+          </ul>
+          </div>
+        </div>
+      <% }) %>
+<% include ../partials/footer  %>

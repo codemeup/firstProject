@@ -1,0 +1,113 @@
+body{
+	font-family: avenir;
+	background-color: #f37159;
+	color: white;
+	background:url('../images/funny-child-and-dog-friendship-big-dog-brown-shades-of-cream-white-neck-muscular-body-hd-wallpapers-desktop-wallpaper-dog-and-baby-best-friends-dog-baby-friendship-child-and-dog-friendship-a-boy-a-dog.jpg') center no-repeat;
+	height: 800px;
+}
+.container-fluid{
+	padding: 20px;
+	margin: auto;
+	position: center;
+}
+
+/*.hatch{
+	animation-name: hatch;
+	-webkit-animation-name: hatch;	
+
+	animation-duration: 2s;	
+	-webkit-animation-duration: 2s;
+
+	animation-timing-function: ease-in-out;	
+	-webkit-animation-timing-function: ease-in-out;
+
+	transform-origin: 50% 100%;
+	-ms-transform-origin: 50% 100%;
+	-webkit-transform-origin: 50% 100%; 
+
+	visibility: visible !important;		
+}*/
+.buffer2{
+	padding: 10px;
+	margin: auto;
+	position: center;
+	background-color: rgba(255,255,255,.60);
+	color: #33CCFF;
+	text-align: center;
+	margin-top: 100px;
+	margin-right: 90px;
+	margin-left: 90px;
+	background: colors:(255,255,255,0.5)
+}
+h1{
+		font-family: remponk;
+		font-size: 60px;
+		color: #B0B0CA;
+	/*color:white;*/
+}
+h2{
+		font-family: remponk;
+		font-size: 40px;
+		color: black;
+}
+h4{
+		font-family: avenir;
+		font-size: 20px;
+		color: black;
+		font: bold;
+	}
+h5{
+		font-family: avenir;
+		font-size: 16px;
+		color: black;
+}
+p{
+		font-family: avenir;
+		font-size: 16px;
+		color: black;
+}
+.element {
+    -webkit-animation: tutsFade 4s 1s infinite linear alternate;
+    -moz-animation: tutsFade 4s 1s infinite linear alternate;
+    -ms-animation: tutsFade 4s 1s infinite linear alternate;
+    -o-animation: tutsFade 4s 1s infinite linear alternate;
+    animation: tutsFade 4s 1s infinite linear alternate;
+}
+/*h4{
+/*	font-style: italic;*/
+/*	font-family: breamcatcher;
+}*/
+hr{
+	margin-left: 150px;
+	margin-right: 150px;
+}
+.buffer{
+	padding: 80px;
+	margin: auto;
+	position: center;
+	/*background-color: rgba(255,255,255,.60);
+	color: #f37159;*/
+	text-align: center;
+	margin-top: 100px;
+	background: colors:(255,255,255,0.5)
+}
+.buffer1{
+	width: 100%;
+	position: absolute;
+	left: 0px;
+}
+.img{
+	position: center;
+}
+#footer{
+	padding: 50px;
+	margin: 50px;
+	margin:auto;
+}
+#logout{
+	font-family: remponk;
+	font-size: 20px;
+	color: #B0B0CA;
+	text-shadow: 0.5px 0.5px white;
+}
+

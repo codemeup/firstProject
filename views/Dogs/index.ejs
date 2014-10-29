@@ -1,0 +1,29 @@
+<% include ../partials/header  %>
+<% if (typeof user !== "undefined") { %>
+  <h1> Oops! You're not currently logged in to HoundHustler.</h1>
+  <h3> Please <a href=/index>log in</a> to continue.</h3>
+  <!-- <a href="/auth/facebook"><img src="login-with-facebook.png" width="154" height="22"></a> -->
+
+<% } else { %>
+    
+    <h1>THE HOUNDS</h1>
+      <% dogs.forEach(function (dog) { %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+              <h5 class="panel-title"><%= dog.name %></h5>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li><p>Breed: <%= dog.breed %></p></li>
+              <li><p>Age: <%= dog.age %></p></li>
+              <li><p>Walkies needs:<%= dog.walkiesNeeds %></p></li>
+              <li><p>Guilty pleasure:<%= dog.guiltyPleasure %></p></li>
+              <li><p>About:<%= dog.about %></p></li>
+          </ul>
+          </div>
+        </div>
+
+
+      <% }) %>
+<% } %>
+<% include ../partials/footer  %>

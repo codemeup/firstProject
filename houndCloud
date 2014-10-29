@@ -1,0 +1,388 @@
+\q
+\q
+\c learnpostgres
+CREATE TABLE
+CREATE TABLE students()
+;
+CREATE TABLE students(student_id SERIAL PRIMARY KEY, name VARCHAR(30), age INTEGER);
+INSERT INTO students (name,age) VALUES ('Elie', 26);
+INSERT INTO students (name,age) VALUES ('Bob', 32);
+\dt
+select * FROM students;
+INSERT INTO students (name,age) VALUES ('Tif', 12);
+INSERT INTO students (name,age) VALUES ('Tim', 23);
+select * FROM students;
+select name,age from students;
+UPDATE students SET name = 'Taco' WHERE name = 'Elie';
+select name,age from students;
+SELECT * FROM students ORDER BY age ASC;
+DELETE FROM students WHERE name = 'Taco';
+INSERT INTO students (name,age) VALUES ('Elie', 26);
+CREATE TABLE item(item_id SERIAL PRIMARY ID, name VARCHAR(30));
+CREATE TABLE item(item_id SERIAL PRIMARY KEY, name VARCHAR(30));
+\DT
+\dt
+INSERT INTO items(name) VALUES(billy);
+INSERT INTO items (name) VALUES (billy);
+INSERT INTO item (name) VALUES (billy);
+CREATE TABLE items(item_id SERIAL PRIMARY KEY, name VARCHAR(30));
+\DT
+\dt
+INSERT INTO items (name) VALUES (nachos);
+INSERT INTO items (name) VALUES ('nachos');
+INSERT INTO items (name) VALUES ('tacos');
+INSERT INTO items (name) VALUES ('burritos');
+SELECT * FROM items;
+INSERT INTO students (name, age) VALUES ('ELIE', 26);
+SELECT * FROM students
+SELECT * FROM students;
+SELECT * FROM students WHERE name = 'Elie'
+;
+SELECT * FROM students WHERE name = 'Elie'
+; OR name = 'Mary';
+SELECT * FROM students
+;
+SELECT * FROM students LIMIT 2;
+SELECT * FROM students LIMIT 2 OFFSET 1;
+SELECT * FROM students LIMIT 2 OFFSET 2;
+CREATE TABLE authors( author_id SERIAL PRIMARY KEY, name VARCHAR(50));
+CREATE TABLE books(book_id SERIAL PRIMARY KEY, name VARCHAR(50), authorId INTEGER);
+INSERT INTO authors (name) VALUES ('Elie');
+INSERT INTO authors (name) VALUES ('Bob');
+INSERT INTO books (name, authorId) VALUES ('Book 1', 1);
+INSERT INTO books (name, authorId) VALUES ('Book 2', 2);
+JOIN * FROM authors JOIN books ON authors.author_id = books.author_id;
+SELECT * FROM authors JOIN books ON authors.author_id = books.author_id;
+SELECT * FROM authors JOIN books ON authors.author_id = books.authorId;
+ALTER TABLE books ADD CONSTRAINT author_fk FOREIGN KEY (authorId) REFERENCES authors (author_id) ON DELETE NO ACTION;
+DELETE FROM authors WHERE author_id=1;
+\q
+createdb apartmentlabsql
+\c apartmentlabsql
+psql
+\c apartmentlabsql
+\q
+\c apartmentlabsql
+CREATE TABLE OWNERS(OWNER_ID SERIAL PRIMARY KEY, name VARCHAR(50), age INTEGER);
+CREATE TABLE PROPERTIES(property_id SERIAL PRIMARY KEY, name VARCHAR(50), units INTEGER, ownerId INTEGER NOT NULL);
+\dt
+ALTER TABLE properties ADD CONSTRAINT owner_fk FOREIGN KEY (ownerId) REFERENCES owners (OWNER_ID) ON DELETE NO ACTION;
+\dt
+SELECT name FROM owners
+;
+SELECT name FROM owners;
+SELECT * FROM user;
+SELECT * FROM owners;
+SELECT name FROM owners;
+INSERT INTO owners (name, age) VALUES ('Billy', 30);
+INSERT INTO owners (name, age) VALUES ('Bob', 31);
+INSERT INTO owners (name, age) VALUES ('Thornton', 32);
+SELECT name FROM owners;
+SELECT age FROM owners ORDER BY age ASC;
+SELECT * FROM owners WHERE name LIKE ‘%Donald%’;
+SELECT * FROM owners WHERE name LIKE %'Donald'%;
+INSERT INTO owners (name, age) VALUES ('Donald', 32);
+SELECT * FROM owners WHERE name LIKE ‘%Donald%’;
+SELECT * FROM owners WHERE name LIKE ‘Donald’;
+SELECT * FROM owners WHERE name LIKE ‘%Donald%’;
+SELECT * FROM owners WHERE name LIKE ‘%onald’;
+SELECT * FROM owners WHERE age > 30;
+INSERT INTO owners (name, age) VALUES ('Emily', 32);
+SELECT * FROM owners WHERE name LIKE '%Donald%';
+SELECT* FROM owners WHERE name LIKE 'E%';
+INSERT INTO owners (name, age) VALUES ('John', 33);
+INSERT INTO owners (name, age) VALUES ('Jane', 43);
+INSERT INTO properties (name, units, ownerId) VALUES ('Buckingham Palace', 500, 1);
+INSERT INTO properties (name, units, ownerId) VALUES ('Archstone', 5, 2);
+INSERT INTO properties (name, units, ownerId) VALUES ('Stonehenge', 1, 3);
+SELECT * properties WHERE properties.property_id != 3 OR properties.property_id != 5 OR WHERE properties.name = 'Archstone';
+SELECT * IN properties WHERE properties.property_id != 3 OR properties.property_id != 5 OR WHERE properties.name = 'Archstone';
+\dt
+\dt
+\dt
+\dt
+\dt
+SELECT * FROM owners
+;
+UPDATE owners WHERE name = 'Jane' RETURNING age = 30;
+UPDATE owners SET age = 30 WHERE name = 'Jane';
+SELECT * FROM owners
+;
+UPDATE owners SET name = 'Jane' WHERE name = 'Janet';
+SELECT * FROM owners
+;
+UPDATE owners SET name = 'Janet' WHERE name = 'Jane';
+SELECT * FROM owners
+;
+SELECT * FROM properties;
+ UPDATE peoperties SET units = '20' WHERE name = 'Archstone';
+ UPDATE peoperties SET units = 20 WHERE name = 'Archstone';
+ UPDATE properties SET units = 20 WHERE name = 'Archstone';
+SELECT * FROM owners
+;
+ UPDATE FROM owners WHERE name = 'Jane';
+ UPDATE FROM owners WHERE name = 'Janet';
+DELETE FROM owners WHERE name = 'Janet';
+SEL
+ECT * IN properties WHERE properties.property_id != 3 OR properties.property_id != 5 OR WHERE properties.name = 'Archstone';
+SELECT * IN properties WHERE properties.property_id != 3 OR properties.property_id !=5 OR WHERE properties.name = 'Archstone';
+SEL
+SELECT * properties WHERE properties.property_id != 3 OR properties.property_id !=5 OR WHERE properties.name = 'Archstone' ORDER BY name ASC;
+SELECT * properties WHERE properties.property_id != 3 OR properties.property_id !=5 OR WHERE properties.name = 'Archstone' ORDER BY name ASC;
+SELECT * FROM properties WHERE name NOT IN ('Archstone') AND property_id <>3 AND property_id <>5 ORDER BY name ASC;
+SELECT count(*) properties
+;
+SELECT count(*) properties
+;
+SELECT MAX(age) FROM owners;
+SELECT * FROM owners LIMIT 2;
+SELECT * FROM owners LIMIT 3;
+ALTER TABLE properties ADD COLUMN ownerId INTEGER;
+ALTER TABLE properties ADD CONSTRAINT owner_fk FOREIGN KEY (ownerId) REFERENCES owners (OWNER_ID) ON DELETE NO ACTION;
+ALTER TABLE properties ADD CONSTRAINT owner_fk FOREIGN KEY (ownerId) REFERENCES owners (OWNER_ID) ON DELETE NO ACTION;
+SELECT * FROM properties INNER JOIN owners ON OWNER_ID = ownerId;
+SELECT owners.name  FROM properties INNER JOIN owners ON OWNER_ID = ownerId;
+SELECT owners.name, owners.age,  FROM properties INNER JOIN owners ON OWNER_ID = ownerId;
+SELECT owners.name, owners.age  FROM properties INNER JOIN owners ON OWNER_ID = ownerId;
+SELECT owners.id, owners.name, owners.age, properties.name  FROM properties INNER JOIN owners ON OWNER_ID = ownerId;
+SELECT owners.owner_id, owners.name, owners.age, properties.name  FROM properties INNER JOIN owners ON OWNER_ID = ownerId;
+SELECT owners.owner_id, owners.name, owners.age, properties.name, properties.property  FROM properties INNER JOIN owners ON OWNER_ID = ownerId;
+SELECT owners.owner_id, owners.name, owners.age, properties.name, properties.property_id  FROM properties INNER JOIN owners ON OWNER_ID = ownerId;
+ALTER[properties.name] SET 'property_name';
+ALTER TABLE UPDATE properties.name SET property_name;
+ALTER TABLE properties RENAME COLUMN name TO property_name;
+SELECT count(*) properties WHERE ownerId>1 AND owner_id<3;
+SELECT count(*) properties WHERE 1<ownerId<3;
+\q
+cd ..
+ls
+\l
+\q
+DROP DATABASE IF EXISTS person_pet_app;
+CREATE DATABASE person_pet_app;
+\c person_pet_app
+CREATE TABLE person (
+      id serial primary key,
+      name text,
+      age integer
+    );
+CREATE TABLE pet (
+  id serial primary key,
+  name text,
+  age integer,
+  breed text,
+  person_id integer
+);
+  INSERT INTO person ( name, age)
+        VALUES ('Zed', 37);
+  INSERT INTO person ( name, age)
+        VALUES ('Bobby', 7);
+  INSERT INTO person ( name, age)
+        VALUES ('John', 17);
+  INSERT INTO pet (name, breed, age, person_id)
+        VALUES ( 'Fluffy', 'Unicorn', 1000, 1);
+  INSERT INTO pet (name, breed, age, person_id)
+        VALUES ('Rocko', 'Dog', 4, 2);
+  INSERT INTO pet (name, breed, age, person_id)
+       VALUES ('Gigantor', 'Robot', 25, 1);
+  INSERT INTO pet (name, breed, age, person_id)
+       VALUES ('Goldy', 'Fish', 1, 2);
+  INSERT INTO pet (name, breed, age, person_id)
+      VALUES ('Czar', 'Cat', 10, NULL);  
+\d+ person
+\d+ pet
+SELECT * FROM person
+;
+SELECT * FROM pets
+;
+SELECT * FROM pet;
+SELECT person.name, pet.name from person
+INNER JOIN pet 
+ON person.id = pet.person_id;
+\l
+SELECT person.name, pet.name from person
+JOIN pet 
+ON person.id = pet.person_id;
+SELECT person.name, pet.name from person
+  LEFT JOIN pet
+  ON person.id = pet.person_id;
+SELECT person.name, pet.name from person
+  LEFT JOIN pet
+  ON person.id = pet.person_id
+  WHERE pet.person_id IS NULL;
+\q
+\i setul.sql
+\i setup.sql
+\c students_example
+\d
+\d students
+\d courses
+\d courses_students
+\i many_to_many/setup.sql
+SELECT c.id, c.title FROM courses AS c;
+SELECT c.id, c.title, cs.student_id FROM courses AS c
+  JOIN courses_students AS cs
+  ON cs.course_id = c.id;
+SELECT c.id, c.title, cs.student_id,s.name FROM courses AS c
+   JOIN courses_students AS cs
+   ON cs.course_id = c.id 
+   JOIN students AS s
+   ON cs.student_id = s.id;
+SELECT c.id, c.title, cs.student_id,s.name FROM courses AS c
+   LEFT JOIN courses_students AS cs
+   ON cs.course_id = c.id 
+   RIGHT JOIN students AS s
+   ON cs.student_id = s.id;
+SELECT c.id, c.title, cs.student_id,s.name FROM courses AS c
+   JOIN courses_students AS cs
+   ON cs.course_id = c.id 
+   RIGHT JOIN students AS s
+   ON cs.student_id = s.id;
+SELECT c.id, c.title, cs.student_id,s.name FROM courses AS c
+   JOIN courses_students AS cs
+   ON cs.course_id = c.id 
+   RIGHT JOIN students AS s
+   ON cs.student_id = s.id;
+SELECT c.id, c.title, cs.student_id FROM courses AS c
+  JOIN courses_students AS cs
+  ON cs.course_id = c.id;
+SELECT c.id, c.title, cs.student_id,s.name FROM courses AS c
+   JOIN courses_students AS cs
+   ON cs.course_id = c.id 
+   JOIN students AS s
+   ON cs.student_id = s.id;
+SELECT c.id, c.title, cs.student_id,s.name FROM courses AS c
+   LEFT JOIN courses_students AS cs
+   ON cs.course_id = c.id 
+   RIGHT JOIN students AS s
+   ON cs.student_id = s.id;
+\q
+\i setup.sql
+CREATE TABLE
+INSERT 0 1
+\q
+\i setup.sql
+SELECT * FROM books;
+DELETE FROM books WHERE id = 3;
+SELECT * FROM books;
+DELETE FROM books WHERE id = 4;
+SELECT * FROM books;
+\q
+\c library_example_app
+SELECT * FROM books;
+\q
+\l
+\q
+\c sequelizelibrary
+\dt
+\q
+\c sequelizelibrary
+\dt
+\q
+\c sequalize
+\c sequelize
+\c sequelizeassociations
+\q
+drop database filmreel
+\q
+\c filmreel 
+drop database
+;
+\q
+drop database filmreel;
+\q
+\dt
+\c filmreel
+\dt
+\dt
+\q
+\c filmreel
+\dt
+\d actors;
+\d "Actors";
+DROP TABLE "SequelizeMeta"
+;
+\dt
+\q
+\l
+\c squilizelab
+select * from posts;
+select * from post;
+\d
+select * from Posts;
+select * from posts;
+\d+
+select * from authors;
+select * from Authors;
+select * from "Authors";
+select * from "Posts";
+delete from "Posts"
+;
+select * from "Authors";
+\c squilizelab
+select * from "Posts";
+\c squilizelab
+\dt
+\q
+\c morningauth
+\q
+\c morningauth
+\dt
+\d
+\q
+\c passportBlog
+\q
+\c passportLab2
+\q
+\c movies_and_actors_dev
+\q
+CREATE DB\q
+\c todo_with_tests_development 
+\dt
+select * from "Todolists";
+\q
+\c todo_with_tests_development 
+\dt
+select * from "Todolists";
+\q
+\c dogOwners_and_dogLovers
+DROP TABLE "SequelizeMeta";
+\dt
+\q
+\c dogOwners_and_dogLovers
+\dt
+SELECT * FROM DogLovers
+;
+SELECT * FROM doglovers;
+SELECT * FROM dogLovers;
+SELECT * FROM "DogOwners";
+\q
+CREATEDB hound_hustler
+\c hound_hustler
+\c hound_hustler;
+\q
+\c hound_hustler
+\q
+c\ hound_hustler
+\c hound_hustler
+DROP TABLE "SequelizeMeta";
+DROP TABLE "SequelizeMeta";
+\q
+\c houndhustler
+\c HoundHustler
+hound_hustler
+;
+\c hound_hustler
+\q
+\c houndCloud
+\dt
+SELECT * FROM users
+;
+SELECT * FROM users
+;
+SELECT * FROM "Users";
+SELECT * FROM "Users";
+\q
+\c houndcloud
+\l
+\s houndCloud

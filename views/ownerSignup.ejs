@@ -1,0 +1,38 @@
+<% include partials/header  %>
+
+  <h1>Welcome to dog owner signup, <%= user.name %>.</h1> 
+  <h3>About you</h3>
+  <form role="form" method="post" action="/users">
+  <div class="form-group">
+    <label for="breed">Favorite breed</label>
+    <input type="text" class="form-control" name="user[favoriteBreed]" id="breed" placeholder="e.g.Poodle" autofocus>
+  </div>
+  <div class="form-group">
+    <label for="about">About</label>
+    <input type="text" class="form-control" name="user[about]" id="about" placeholder="e.g. Dedicated dog owner for over 10 years, travels a lot at weekends so looking for a caring dogsitter from time to time.">
+  </div>
+  <div class="form-group">
+    <label for="contactNumber">Contact number</label>
+    <input type="integer" class="form-control" name="user[contactNumber]"id="contactNumber" placeholder="Your contact number">
+  </div>
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" name="user[contactEmail]" id="email" placeholder="Your email">
+  </div>
+    <div class="form-group">
+    <label for="streetAddress">Street address</label>
+    <input type="text" class="form-control" name="user[streetAddress]" id="streetAddress" placeholder="435 China Basin Street">
+  </div>
+    <div class="form-group">
+    <label for="zipCode">ZIP code</label>
+    <input type="integer" class="form-control" name="user[zipCode]" id="zipCode" placeholder="e.g. 94158">
+  </div>
+  <input type="hidden" name="user[ownerOrLover]" value=true>
+  <br>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+  <br>
+  <a href="/logout">Logout</a>
+  <br>
+
+<% include partials/footer  %>

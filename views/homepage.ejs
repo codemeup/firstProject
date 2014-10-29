@@ -1,0 +1,22 @@
+<% include partials/header  %>
+<% if (!user) { %>
+<div class="container-fluid">
+  <div class="buffer">
+    <div class="buffer1">
+      <h1 class="element">WELCOME TO HOUNDHUSTLER</h1>
+      <h4>Please sign in with Facebook</h4>
+      <a href="/auth/facebook"><img src="login-with-facebook.png" width="320" height="45"></a>
+    </div>
+  </div>
+</div>
+<% } else { %>
+  <div class="buffer2">
+    <h2>Hello, <%= user.name %></h2>
+    <br>
+    <h4>Welcome to HoundHustler. Explore your options here.</h4>
+    <br>
+    <a href="/logout">Logout</a></span>
+    <br>
+  </div>
+<% } %>
+<% include partials/footer  %>

@@ -1,0 +1,40 @@
+<% include partials/header  %>
+<h1>ADD YOUR DOG</h1> 
+ <h3>About your dog</h3>
+ <form role="form" method="post" action="/dogs">
+   <div class="form-group">
+    <label for="dogname">Name</label>
+    <input type="text" class="form-control" name="dog[name]" id="dogname" placeholder="e.g.Lassie">
+  </div>
+  <div class="form-group">
+    <label for="breed">Breed</label>
+    <input type="text" class="form-control" name="dog[breed]" id="breed" placeholder="e.g.Poodle">
+  </div>
+  <div class="form-group">
+    <label for="age">Age</label>
+    <input type="integer" class="form-control" name="dog[age]" id="age" placeholder="e.g. Mind your own business">
+  </div>
+  <div class="form-group">
+    <label for="walkies">Walkies needs</label>
+    <input type="text" class="form-control" name="dog[walkiesNeeds]" id="walkies" placeholder="e.g. Two leisurely strolls per day">
+  </div>
+  <div class="form-group">
+    <label for="guiltyPleasure">Guilty pleasure</label>
+    <input type="text" class="form-control" name="dog[guiltyPleasure]" id="guiltyPleasure" placeholder="e.g. Mmmmmmmm beef jerky">
+  </div>
+  <div class="form-group">
+    <label for="about">About</label>
+    <input type="text" class="form-control" name="dog[about]" id="about" placeholder="Friendly temprament, likes long walks in the park, plenty of trees to mark. Very good with kids.">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputFile">Image upload</label>
+    <input type="file" id="exampleInputFile">
+    <p class="help-block"></p>
+  </div>
+  <input type="hidden" name="user[ownerOrLover]" value="true">
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+  <br>
+  <a href="/logout">Logout</a>
+  <br>
+<% include partials/footer  %>
