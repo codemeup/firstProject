@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.0.23",
     "body-parser": "^1.9.1",
     "chai": "^1.9.2",
     "chai-as-promised": "^4.1.1",

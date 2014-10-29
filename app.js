@@ -7,7 +7,7 @@ var session = require('cookie-session');
 var db = require("./models/index");
 var methodOverride = require('method-override');
 var routeMiddleware = require("./config/routes");
-
+var AWS = require('aws-sdk');
 
 var app = express();
 
@@ -24,6 +24,25 @@ app.set('view engine', 'ejs');
   app.use(passport.session());
   app.use(express.static(__dirname + '/public'));
   app.use(methodOverride('_method'));
+
+// S3 Config
+AWS.config.region = 'us-west-2';
+var AWS_ACCESS_KEY = process.env.S3_ACCESS_KEY_HH;
+var AWS_SECRET_KEY = process.env.S3_SECRET_KEY_HH;
+var S3_BUCKET = process.env.S3_BUCKET_HH;
+
+var s3bucket = new AWS.S3({params: {Bucket: S3_BUCKET}});
+s3bucket.createBucket(function() {
+  var data = {Key: 'myKey', Body: 'Hello!'};
+  s3bucket.putObject(data, function(err, data) {
+    if (err) {
+      console.log("Error uploading data: ", err);
+    } else {
+      console.log("Successfully uploaded data to myBucket/myKey");
+    }
+  });
+});
+
 
 //dummy data
 // db.User.create({fbid:10100962562768904,
