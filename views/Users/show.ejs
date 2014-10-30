@@ -1,11 +1,22 @@
 <% include ../partials/header  %>
-    <h1><%= user.name %></h1>
-    <% users.forEach(function (post) { %>
+    <h1>USER PROFILE</h1>
+
     <div>
-      <h2><a href="/users/<%=user.id%>"><%= user.name %></a></h2>
-      <p><%= user.about %></p>
+      <h2><%= user.name %></h2>
+      <ul>
+      	<li>Favorite Breed: <%= user.favoriteBreed %></li>
+      	<li>About: <%= user.about %></li>
+      	<li>Contact Number: <%= user.contactNumber %></li>
+      	<li>Contact Email: <%= user.contactEmail %></li>
+      </ul>
+    </div>
+    <div>
+    <% user.Dogs.forEach(function (dog, index) { %>
+    <div>
+      <h2><a href="/dogs/<%=dog.id%>"><%= dog.name %></a></h2>
+      <img class="profilepic" src="<%= dog.pictureUrl %>">
     </div>
     <% }) %>
-  </body>
-</html>
+
 <% include ../partials/footer  %>
+

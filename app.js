@@ -218,9 +218,9 @@ app.post('/dogs', function(req, res){
   var walkiesNeeds = req.body.dog.walkiesNeeds;
   var guiltyPleasure = req.body.dog.guiltyPleasure;
   var userId = req.user.id;
-  var picture = req.body.dog.picture;
+  var pictureUrl = ("http://www.ucarecdn.com/"+req.body.dog.pictureUrl+"/");
   
-  console.log("posting dog details " + name + breed + age + about + walkiesNeeds + guiltyPleasure + picture);
+  console.log("posting dog details " + name + breed + age + about + walkiesNeeds + guiltyPleasure + pictureUrl);
 
   db.Dog.create({name:name,
                   breed:breed,
@@ -228,7 +228,9 @@ app.post('/dogs', function(req, res){
                   about:about,
                   walkiesNeeds:walkiesNeeds,
                   guiltyPleasure:guiltyPleasure,
-                  userId: userId});
+                  UserId: userId,
+                  pictureUrl: pictureUrl,
+                });
   res.redirect('/homepage');  
 
 });
@@ -243,8 +245,17 @@ app.get('/users/index', routeMiddleware.checkAuthentication, function(req, res){
   }); 
 });
 
-app.get('/users/:id', routeMiddleware.checkAuthentication, function(req, res){
-  res.render('Users/show', { user: req.user });
+//show the user and list their dogs
+app.get('/users/show/:id', routeMiddleware.checkAuthentication, function(req, res){
+  console.log("THIS IS ID",req.params.id);
+
+  db.User.find({
+      where: {id:req.params.id},
+      include: [db.Dog]
+  }).done(function(err, thisUser){
+    console.log("HERE IS THE USER:" + thisUser.name);
+    res.render('Users/show', { user: thisUser });
+  });
 });
 
 app.get('/dogSignup', routeMiddleware.checkAuthentication, function(req, res){
@@ -256,74 +267,28 @@ app.get('/homepage', routeMiddleware.checkAuthentication, function(req, res){
   res.render('homepage', { user: req.user });
 });
 
-//show all dogs
+//index showing all dogs
 app.get('/dogs/index', routeMiddleware.checkAuthentication, function(req, res){
   var dogs = [];
-  var user = 
-  db.Dog.findAll().done(function(err, dogs){
-    console.log(err);
-    dogs = dogs;
+  db.Dog.findAll({include:[db.User]}).done(function(err, dogs){
+    console.log("DD:"+dogs[0].User.name);
     
     res.render('Dogs/index', { dogs: dogs});
   }); 
 });
 
-// db.User.find({where: {name: this}}).done(function (err, owner) {
-//   db.User.tagOwnerClass().done(function(err,ownerClass)
-  // )
-//    owner.tagOwnerClass().done(function (err, ownerClass) {
-//     printCast(owner, ownersGroup);
-//   });
-// });
+//show each dog
+app.get('/dogs/show/:id', routeMiddleware.checkAuthentication, function(req, res){
+  db.Dog.find({
+    where: {id:req.params.id},
+    include: [db.User]
+  }).done(function(err, thisDog){
+    console.log(thisDog, "HERE IS THIS DOG");
+    res.render('Dogs/show', { dog: thisDog });
+  }); 
+});
 
-//sudocode
-// app.get("/posts", function (req, res) {
-//   db.Post.findAll({include: [db.Author, db.Tag]}).done(function (err, allPosts) {
-//     res.render("posts/index.ejs", {posts: allPosts});
-//   });
-// });
-
-// app.get("/posts/:id", function (req, res) {
-//   db.Post.find({
-//     where: {id: req.params.id},
-//     include: [db.Author, db.Tag]
-//   }).done(function (err, post) {
-//     res.render("posts/show.ejs", {post: post});
-//   });
-// });
-
-// app.post("/posts", function (req, res) {
-//   var authorParams = req.body.author;
-//   var postParams = req.body.post;
-//   var tagParams = req.body.tags;
-
-//   var tagArr = tagParams.split(",");
-
-//   var createTags = function (post) {
-//     if (tagArr.length === 0) {
-//       res.redirect("/posts");
-//     } else {
-//       var tagObj = {name: tagArr.pop()};
-//       db.Tag.findOrCreate({
-//         where: tagObj,
-//         defaults: tagObj
-//       }).done(function (err, tag, created) {
-//         post.addTag(tag);
-//         createTags(post);
-//       });
-//     }
-//   };
-
-//   var createPost = function(err, author, created) {
-//     db.Post.create(postParams).done(function(err, post) {
-//       author.addPost(post).done(function () {
-//         createTags(post);
-//       });
-//     });
-//   };
-//end
-
-
+//404 page
 app.get("*",function(req,res){
   res.status(404);
   res.render("404");

@@ -1,40 +1,14 @@
 <% include ../partials/header  %>
-    <h1><%= dog.name %>'s details</h1>
-    <% posts.forEach(function (dog) { %>
-    <div class="panel panel-default">
-	  <div class="panel-heading">Panel heading without title</div>
-	  <div class="panel-body">
-	    Panel content
-	  </div>
-	</div>
-
-	<div class="panel panel-default">
-	  <div class="panel-heading">
-	    <h3 class="panel-title"><%= dog.name %</h3>
-	  </div>
-	  <div class="panel-body">
-	    <p><p class="bold">Breed: </p><%= dog.breed %></p>
-	    <p><p class="bold">Age: </p><%= dog.age %></p>
-	    <p><p class="bold">Walkies Needs: </p><%= dog.walkiesNeeds %></p>
-	    <p><p class="bold">Guilty Pleasure: </p><%= dog.guiltyPleasure %></p>
-	    <p><p class="bold">About: </p><%= dog.about %></p>
-	  </div>
-	</div>
-
-
-
-
-
-
-
+    <h1>DOG PROFILE</h1>
 
     <div>
-	
-
-      <h2><a href="/dogs/<%=dog.id%>"><%= dog.name %></a></h2>
-      <p><%= dog.breed %></p>
+      <h2><%= dog.name %></h2>
+      <ul>
+      	<li>Breed: <%= dog.breed %></li>
+      	<li>About: <%= dog.about %></li>
+      	<li>Owner: <%= dog.User.contactEmail %></li>
+        <li><a href="/users/show/<%= dog.User.id %>">See owner profile.</a></li>
+      </ul>
     </div>
-    <% }) %>
-  </body>
-</html>
+
 <% include ../partials/footer  %>
