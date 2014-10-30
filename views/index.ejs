@@ -17,17 +17,22 @@
 <!--   <link rel="stylesheet" href="stylesheets/animations.css"> -->
 
   <meta charset="UTF-8">
+  <div id="animated-example" class="animated fadeIn">
   <title>Welcome to HoundHustler</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+  </div>
 </head>
 <body>
 <% if (typeof user === 'undefined') { %> 
 <div class="container-fluid"> 
   <div class="buffer"> 
   <div class="buffer1"> 
+  <div id="animated-example" class="animated fadeIn">
   <h1 class="element">WELCOME TO HOUNDHUSTLER</h1> 
-<!--   <h4>Please sign in with Facebook</h4> -->
+  </div>
+  <div id="animated-example" class="animated2 fadeInDown">
   <a href="/auth/facebook"><img src="/login-with-facebook.png" width="320" height="45"></a> 
+  </div>
   </div> 
 <% } else { %> 
   <div class="buffer2"> 
