@@ -1,0 +1,45 @@
+  req.pipe(req.busboy);
+  req.busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+    if (!filename) {
+      // If filename is not truthy it means there's no file
+      return;
+    }
+    // Create the initial array containing the stream's chunks
+    file.fileRead = [];
+
+    file.on('data', function(chunk) {
+      // Push chunks into the fileRead array
+      this.fileRead.push(chunk);
+    });
+
+    file.on('error', function(err) {
+      console.log('Error while buffering the stream: ', err);
+    });
+
+    file.on('end', function() {
+      // Concat the chunks into a Buffer
+      var finalBuffer = Buffer.concat(this.fileRead);
+
+      //Upload to S3
+      var params = {
+        Bucket: 'houndhustler', /* required */
+        ACL: 'public-read',
+        Key: "The cutest dog in the world2", /* required, aka title */ 
+        Body: finalBuffer, /* content */
+        ContentType: mimetype
+      };
+      var s3 = new AWS.S3();
+      s3.putObject(params, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else     console.log(data);           // successful response
+      });
+    });
+  });
+  req.busboy.on('field', function(fieldname, val) {
+    // console.log(fieldname, val);
+    req.body[fieldname] = val;
+  });
+  req.busboy.on('finish', function() {
+ 
+  });
+  console.log("AFTER BUSBOY");

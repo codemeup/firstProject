@@ -26,7 +26,10 @@ module.exports = {
       guiltyPleasure: {
         type: DataTypes.STRING
       },
-      userId: {
+      pictureUrl:{
+        type: DataTypes.STRING,
+      },
+      UserId: {
         type: DataTypes.INTEGER,
         foreignKey:true
       },

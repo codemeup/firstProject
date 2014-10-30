@@ -29,6 +29,12 @@ module.exports = {
       about: {
         type: DataTypes.STRING
       },
+      streetAddress: {
+        type: DataTypes.STRING
+      },
+      zipCode: {
+        type: DataTypes.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

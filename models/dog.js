@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     about: DataTypes.STRING,
     walkiesNeeds: DataTypes.STRING,
     guiltyPleasure: DataTypes.STRING,
+    pictureUrl: DataTypes.STRING,
     UserId: DataTypes.INTEGER
   }, {
     classMethods: {

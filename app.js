@@ -20,29 +20,10 @@ app.set('view engine', 'ejs');
     name: 'fbcookz',
     maxage: 3600000
   }));
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(express.static(__dirname + '/public'));
-  app.use(methodOverride('_method'));
-
-// S3 Config
-AWS.config.region = 'us-west-2';
-var AWS_ACCESS_KEY = process.env.S3_ACCESS_KEY_HH;
-var AWS_SECRET_KEY = process.env.S3_SECRET_KEY_HH;
-var S3_BUCKET = process.env.S3_BUCKET_HH;
-
-var s3bucket = new AWS.S3({params: {Bucket: S3_BUCKET}});
-s3bucket.createBucket(function() {
-  var data = {Key: 'myKey', Body: 'Hello!'};
-  s3bucket.putObject(data, function(err, data) {
-    if (err) {
-      console.log("Error uploading data: ", err);
-    } else {
-      console.log("Successfully uploaded data to myBucket/myKey");
-    }
-  });
-});
-
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(__dirname + '/public'));
+app.use(methodOverride('_method'));
 
 //dummy data
 // db.User.create({fbid:10100962562768904,
@@ -230,7 +211,6 @@ app.get('/dogSignup', routeMiddleware.checkAuthentication, function(req, res){
   res.render('dogSignup', { user: req.user });
 });
 app.post('/dogs', function(req, res){
-  console.log("POSTING DOG FORM!!");
   var name = req.body.dog.name;
   var breed = req.body.dog.breed;
   var age = req.body.dog.age;
@@ -238,8 +218,9 @@ app.post('/dogs', function(req, res){
   var walkiesNeeds = req.body.dog.walkiesNeeds;
   var guiltyPleasure = req.body.dog.guiltyPleasure;
   var userId = req.user.id;
+  var picture = req.body.dog.picture;
   
-  console.log("posting dog details " + name + breed + age + about + walkiesNeeds + guiltyPleasure);
+  console.log("posting dog details " + name + breed + age + about + walkiesNeeds + guiltyPleasure + picture);
 
   db.Dog.create({name:name,
                   breed:breed,
@@ -248,7 +229,8 @@ app.post('/dogs', function(req, res){
                   walkiesNeeds:walkiesNeeds,
                   guiltyPleasure:guiltyPleasure,
                   userId: userId});
-  res.redirect('/homepage'); 
+  res.redirect('/homepage');  
+
 });
 
 //show all users
@@ -340,6 +322,7 @@ app.get('/dogs/index', routeMiddleware.checkAuthentication, function(req, res){
 //     });
 //   };
 //end
+
 
 app.get("*",function(req,res){
   res.status(404);

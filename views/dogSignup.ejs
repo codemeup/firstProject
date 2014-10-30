@@ -27,11 +27,11 @@
     <input type="text" class="form-control" name="dog[about]" id="about" placeholder="Friendly temprament, likes long walks in the park, plenty of trees to mark. Very good with kids.">
   </div>
   <div class="form-group">
-    <label for="exampleInputFile">Image upload</label>
-    <input type="file" id="exampleInputFile">
-    <p class="help-block"></p>
+    <label for="imageUpload">Image upload</label>
+    <input type="hidden" name="dog[picture]" role="uploadcare-uploader" id="imageUpload"/>
+<!--     <input type="file" name="dog[dogPic]" id="exampleInputFile">
+    <p class="help-block"></p> -->
   </div>
-  <input type="hidden" name="user[ownerOrLover]" value="true">
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
   <br>
