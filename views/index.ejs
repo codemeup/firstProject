@@ -34,11 +34,9 @@
   <a href="/auth/facebook"><img src="/login-with-facebook.png" width="320" height="45"></a> 
   </div>
   </div> 
-<% } else { %> 
+<% } else if (user.favoriteBreed === 'null'){ %> 
   <div class="buffer2"> 
   <h2>Hello, <%= user.name %></h2> 
-<!--   <h2>Hello, <%= user.fbid %>.</h2>
-  <h2>Hello, <%= user.contactEmails %>.</h2> -->
   <br>
   <br>
   <h4>Welcome to HoundHustler. Discrete dog dealers, puppy pimps, canine chandlers.</h4>
@@ -58,8 +56,16 @@
   <a id="logout" href="/logout">Logout</a>
   <br>
   </div>
- 
-<% } %>
+ <% } else { %> 
+  <div class="buffer2"> 
+  <h2>Welcome back, <%= user.name %></h2> 
+  <h2><a href="../dogs/index">ENTER SITE</a></h2>
+  <br>
+    <a id="logout" href="/logout">Logout</a>
+    <br>
+  </div>
+
+  <% } %>
  </div>
  </div>
  

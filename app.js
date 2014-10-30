@@ -95,13 +95,14 @@ passport.use(new FacebookStrategy({
 
     process.nextTick(function () {
       console.log("nextTick Ran", profile);
+      console.log(profile, "FACEBOOK PROFILE OPJECT RETURNING");
       db.User.findOrCreate({
         where:{
           fbid: profile.id,
           name: profile.displayName,
           // contactEmail: profile.emails
-          // birthday: profile.birthday,
-          // photo: profile.photos
+          birthday: profile.birthday,
+          photo: profile.photos
         }
       }).done(function(err,user){
         console.log("done Ran");
@@ -116,16 +117,20 @@ app.get('/', function(req, res){
 });
 
 app.get('/index', routeMiddleware.preventLoginSignup, function(req, res){
-  res.render('index', { user: req.user });
+    res.render('index', { user: req.user});
 });
 
-app.get('/account', routeMiddleware.checkAuthentication, function(req, res){
-  res.render('account', { user: req.user });
-});
+// app.get('/index', routeMiddleware.preventLoginSignup, function(req, res){
+//   var users = [];
+//   db.User.findAll().done(function(err, users){
+//     users = users;
+//     console.log(users);
+//     res.render('index', { user: req.user, users: users });
+//   }); 
+// });
 
-app.get('/login', routeMiddleware.preventLoginSignup, function(req, res){
-  res.render('index', { user: req.user });
-});
+//   res.render('index', { user: req.user });
+// });
 
 // GET /auth/facebook
 //   Use passport.authenticate() as route middleware to authenticate the
@@ -150,9 +155,9 @@ app.get('/auth/facebook/callback',
     // Check if FIBID is in db, if so hasAccount = true, otherwise false
     console.log("returned from facebook", JSON.stringify(req.session));
     req.session.hasAccount = false;
-
     res.redirect('/');
   });
+
 
 app.get('/logout', function(req, res){
   req.logout();
