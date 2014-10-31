@@ -27,25 +27,36 @@ app.use(methodOverride('_method'));
 
 //dummy data
 // db.User.create({fbid:10100962562768904,
-//                 name: "John",
+//                 name: "The Queen",
 //                 ownerOrLover:true,
-//                 favoriteBreed:"Poodle",
-//                 contactEmail:"john@email.com",
+//                 favoriteBreed:"Corgi",
+//                 contactEmail:"hrh@email.com",
 //                 contactNumber: 9875673635,
-//                 about: "loves dog walking",
-//                 streetAddress: "501 Folsom Street",
-//                 zipCode: 98765,
+//                 about: "Loves dog walking at Balmoral, huge corgi fan",
+//                 streetAddress: "701 Folsom Street",
+//                 zipCode: 94103,
 //                  });
 // db.User.create({fbid:10100962562768998,
 //                 name: "Penny",
 //                 ownerOrLover:false,
-//                 favoriteBreed:"golden retreiver",
+//                 favoriteBreed:"Golden retreiver",
 //                 contactEmail:"penny@email.com",
 //                 contactNumber: 9875683635,
 //                 about: "loves cozy afternoons with a dog",
 //                 streetAddress: "100 Folsom Street",
-//                 zipCode: 98785,
+//                 zipCode: 94105,
 //                  });
+  // db.Dog.create({
+  //   name: "Albert",
+  //   breed: "Corgi",
+  //   age: "20",
+  //   about: "Regal, mild tempered",
+  //   walkiesNeeds: "Once a day, and maybe a couple of short outings, he only has short legs.",
+  //   guiltyPleasure: "Haggis",
+  //   pictureUrl: "http://dogsnuffle.com/wp-content/uploads/2014/03/Pembroke-Welsh-Corgi-Description.jpg",
+  //   UserId: "2",
+  // });
+
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If
@@ -279,7 +290,7 @@ app.get('/dogs/index', routeMiddleware.checkAuthentication, function(req, res){
   }); 
 });
 
-//show each dog
+//show each dog individually
 app.get('/dogs/show/:id', routeMiddleware.checkAuthentication, function(req, res){
   db.Dog.find({
     where: {id:req.params.id},
@@ -294,17 +305,36 @@ app.get('/dogs/show/:id', routeMiddleware.checkAuthentication, function(req, res
 app.get('/dogs/index', routeMiddleware.checkAuthentication, function(req, res){
   res.render('dogsusers', { user: req.user, dog: req.dog });
 });
-app.post('/dogsusers', function(req, res){
-  console.log("HEY DOG");
+app.post('/dogsusers/:id', function(req, res){
   var UserId = req.user.id;
   var DogId = req.body.DogId;
-  
-  console.log("posting favorite details " + UserId + DogId);
-  db.DogsUsers.create({DogId:DogId,
-                  UserId:UserId,
-                });
-  res.redirect('/dogs/index');  
+
+  db.Dog.find(DogId).done(function (err, dog) {
+    if (dog.UserId !== req.user.id) {
+      console.log("posting favorite details " + UserId + DogId);
+      var criteria = {DogId:DogId, UserId:UserId};
+      db.DogsUsers.findOrCreate({
+        where: criteria,
+        defaults: criteria
+      }).done(function () {
+        res.redirect('/dogs/index');
+      });   
+    } else{
+      res.redirect('/dogs/index');
+    }
+  });
 });
+
+//favorite dogs show listing in favorites
+// app.get('/users/favorites', routeMiddleware.checkAuthentication, function(req, res){
+//   db.DogsUsers.findAll({
+//     where: {id:req.params.id},
+//     include:[db.Dog]
+//   }).done(function(err, dogs){
+//     res.render('Users/favorites', { dogs: dogs});
+//     console.log(thisDog, " IS ONE OF MY FAVORITES");
+//   }); 
+// });
 
 //404 page
 app.get("*",function(req,res){

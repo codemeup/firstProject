@@ -1,1 +1,25 @@
-favorites.ejs
+<% include ../partials/header  %>
+    <h1>YOUR HOUNDLIST!</h1>
+
+    <div>
+      <h2><%= user.name %></h2>
+    
+<% dogsusers.forEach(function (dog, i) { %>
+
+    <h5 class="panel-title"><%= dog.name %></h5>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li><p>Breed: <%= dog.breed %></p></li>
+              <li><p>Age: <%= dog.age %></p></li>
+              <li><p>Walkies needs:<%= dog.walkiesNeeds %></p></li>
+              <li><p>Guilty pleasure:<%= dog.guiltyPleasure %></p></li>
+              <li><p>About:<%= dog.about %></p></li>
+
+          </ul>
+          <img class="profilepic" src="<%= dog.pictureUrl %>">
+
+
+
+      <% }) %>
+<% include ../partials/footer  %>
