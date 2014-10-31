@@ -20,43 +20,52 @@ app.set('view engine', 'ejs');
     name: 'fbcookz',
     maxage: 3600000
   }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.static(__dirname + '/public'));
-app.use(methodOverride('_method'));
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(express.static(__dirname + '/public'));
+  app.use(methodOverride('_method'));
+
+// S3 Config
+AWS.config.region = 'us-west-2';
+var AWS_ACCESS_KEY = process.env.S3_ACCESS_KEY_HH;
+var AWS_SECRET_KEY = process.env.S3_SECRET_KEY_HH;
+var S3_BUCKET = process.env.S3_BUCKET_HH;
+
+var s3bucket = new AWS.S3({params: {Bucket: S3_BUCKET}});
+// Examples
+// s3bucket.createBucket(function() {
+//   var data = {Key: 'myKey', Body: 'Hello!'};
+//   s3bucket.putObject(data, function(err, data) {
+//     if (err) {
+//       console.log("Error uploading data: ", err);
+//     } else {
+//       console.log("Successfully uploaded data to myBucket/myKey");
+//     }
+//   });
+// });
+
 
 //dummy data
 // db.User.create({fbid:10100962562768904,
-//                 name: "The Queen",
+//                 name: "John",
 //                 ownerOrLover:true,
-//                 favoriteBreed:"Corgi",
-//                 contactEmail:"hrh@email.com",
+//                 favoriteBreed:"Poodle",
+//                 contactEmail:"john@email.com",
 //                 contactNumber: 9875673635,
-//                 about: "Loves dog walking at Balmoral, huge corgi fan",
-//                 streetAddress: "701 Folsom Street",
-//                 zipCode: 94103,
+//                 about: "loves dog walking",
+//                 streetAddress: "501 Folsom Street",
+//                 zipCode: 98765,
 //                  });
 // db.User.create({fbid:10100962562768998,
 //                 name: "Penny",
 //                 ownerOrLover:false,
-//                 favoriteBreed:"Golden retreiver",
+//                 favoriteBreed:"golden retreiver",
 //                 contactEmail:"penny@email.com",
 //                 contactNumber: 9875683635,
 //                 about: "loves cozy afternoons with a dog",
 //                 streetAddress: "100 Folsom Street",
-//                 zipCode: 94105,
+//                 zipCode: 98785,
 //                  });
-  // db.Dog.create({
-  //   name: "Albert",
-  //   breed: "Corgi",
-  //   age: "20",
-  //   about: "Regal, mild tempered",
-  //   walkiesNeeds: "Once a day, and maybe a couple of short outings, he only has short legs.",
-  //   guiltyPleasure: "Haggis",
-  //   pictureUrl: "http://dogsnuffle.com/wp-content/uploads/2014/03/Pembroke-Welsh-Corgi-Description.jpg",
-  //   UserId: "2",
-  // });
-
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If
@@ -106,7 +115,6 @@ passport.use(new FacebookStrategy({
 
     process.nextTick(function () {
       console.log("nextTick Ran", profile);
-      console.log(profile, "FACEBOOK PROFILE OBJECT RETURNING");
       db.User.findOrCreate({
         where:{
           fbid: profile.id,
@@ -128,20 +136,16 @@ app.get('/', function(req, res){
 });
 
 app.get('/index', routeMiddleware.preventLoginSignup, function(req, res){
-    res.render('index', { user: req.user});
+  res.render('index', { user: req.user });
 });
 
-// app.get('/index', routeMiddleware.preventLoginSignup, function(req, res){
-//   var users = [];
-//   db.User.findAll().done(function(err, users){
-//     users = users;
-//     console.log(users);
-//     res.render('index', { user: req.user, users: users });
-//   }); 
-// });
+app.get('/account', routeMiddleware.checkAuthentication, function(req, res){
+  res.render('account', { user: req.user });
+});
 
-//   res.render('index', { user: req.user });
-// });
+app.get('/login', routeMiddleware.preventLoginSignup, function(req, res){
+  res.render('index', { user: req.user });
+});
 
 // GET /auth/facebook
 //   Use passport.authenticate() as route middleware to authenticate the
@@ -166,9 +170,9 @@ app.get('/auth/facebook/callback',
     // Check if FIBID is in db, if so hasAccount = true, otherwise false
     console.log("returned from facebook", JSON.stringify(req.session));
     req.session.hasAccount = false;
+
     res.redirect('/');
   });
-
 
 app.get('/logout', function(req, res){
   req.logout();
@@ -227,6 +231,7 @@ app.get('/dogSignup', routeMiddleware.checkAuthentication, function(req, res){
   res.render('dogSignup', { user: req.user });
 });
 app.post('/dogs', function(req, res){
+  console.log("POSTING DOG FORM!!");
   var name = req.body.dog.name;
   var breed = req.body.dog.breed;
   var age = req.body.dog.age;
@@ -234,9 +239,8 @@ app.post('/dogs', function(req, res){
   var walkiesNeeds = req.body.dog.walkiesNeeds;
   var guiltyPleasure = req.body.dog.guiltyPleasure;
   var userId = req.user.id;
-  var pictureUrl = ("http://www.ucarecdn.com/"+req.body.dog.pictureUrl+"/");
   
-  console.log("posting dog details " + name + breed + age + about + walkiesNeeds + guiltyPleasure + pictureUrl);
+  console.log("posting dog details " + name + breed + age + about + walkiesNeeds + guiltyPleasure);
 
   db.Dog.create({name:name,
                   breed:breed,
@@ -244,10 +248,8 @@ app.post('/dogs', function(req, res){
                   about:about,
                   walkiesNeeds:walkiesNeeds,
                   guiltyPleasure:guiltyPleasure,
-                  UserId: userId,
-                  pictureUrl: pictureUrl,
-                });
-  res.redirect('/dogs/index');  
+                  userId: userId});
+  res.redirect('/homepage'); 
 });
 
 //show all users
@@ -260,16 +262,8 @@ app.get('/users/index', routeMiddleware.checkAuthentication, function(req, res){
   }); 
 });
 
-//show the user and list their dogs
-app.get('/users/show/:id', routeMiddleware.checkAuthentication, function(req, res){
-  console.log("THIS IS ID",req.params.id);
-  db.User.find({
-      where: {id:req.params.id},
-      include: [db.Dog]
-  }).done(function(err, thisUser){
-    console.log("HERE IS THE USER:" + thisUser.name);
-    res.render('Users/show', { user: thisUser });
-  });
+app.get('/users/:id', routeMiddleware.checkAuthentication, function(req, res){
+  res.render('Users/show', { user: req.user });
 });
 
 app.get('/dogSignup', routeMiddleware.checkAuthentication, function(req, res){
@@ -281,62 +275,73 @@ app.get('/homepage', routeMiddleware.checkAuthentication, function(req, res){
   res.render('homepage', { user: req.user });
 });
 
-//index showing all dogs
+//show all dogs
 app.get('/dogs/index', routeMiddleware.checkAuthentication, function(req, res){
   var dogs = [];
-  db.Dog.findAll({include:[db.User]}).done(function(err, dogs){
+  var user = 
+  db.Dog.findAll().done(function(err, dogs){
+    console.log(err);
+    dogs = dogs;
+    
     res.render('Dogs/index', { dogs: dogs});
   }); 
 });
 
-//show each dog individually
-app.get('/dogs/show/:id', routeMiddleware.checkAuthentication, function(req, res){
-  db.Dog.find({
-    where: {id:req.params.id},
-    include: [db.User]
-  }).done(function(err, thisDog){
-    console.log(thisDog, "HERE IS THIS DOG");
-    res.render('Dogs/show', { dog: thisDog });
-  }); 
-});
-
-//favorite dog - add to join table
-app.get('/dogs/index', routeMiddleware.checkAuthentication, function(req, res){
-  res.render('/users/favorites', { user: req.user, dog: req.dog });
-});
-
-app.post('users/favorites/:id', function(req, res){
-  var UserId = req.user.id;
-  var DogId = req.body.DogId;
-
-  db.Dog.find(DogId).done(function (err, dog) {
-    if (dog.UserId !== req.user.id) {
-      console.log("posting favorite details " + UserId + DogId);
-      var criteria = {DogId:DogId, UserId:UserId};
-      db.DogsUsers.findOrCreate({
-        where: criteria,
-        defaults: criteria
-      }).done(function () {
-        res.redirect('/dogs/index');
-      });   
-    } else{
-      res.redirect('/dogs/index');
-    }
-  });
-});
-
-//favorite dogs show listing in favorites
-// app.get('/users/favorites', routeMiddleware.checkAuthentication, function(req, res){
-//   db.DogsUsers.findAll({
-//     where: {id:req.params.id},
-//     include:[db.Dog]
-//   }).done(function(err, dogs){
-//     res.render('Users/favorites', { dogs: dogs});
-//     console.log(thisDog, " IS ONE OF MY FAVORITES");
-//   }); 
+// db.User.find({where: {name: this}}).done(function (err, owner) {
+//   db.User.tagOwnerClass().done(function(err,ownerClass)
+  // )
+//    owner.tagOwnerClass().done(function (err, ownerClass) {
+//     printCast(owner, ownersGroup);
+//   });
 // });
 
-//404 page
+//sudocode
+// app.get("/posts", function (req, res) {
+//   db.Post.findAll({include: [db.Author, db.Tag]}).done(function (err, allPosts) {
+//     res.render("posts/index.ejs", {posts: allPosts});
+//   });
+// });
+
+// app.get("/posts/:id", function (req, res) {
+//   db.Post.find({
+//     where: {id: req.params.id},
+//     include: [db.Author, db.Tag]
+//   }).done(function (err, post) {
+//     res.render("posts/show.ejs", {post: post});
+//   });
+// });
+
+// app.post("/posts", function (req, res) {
+//   var authorParams = req.body.author;
+//   var postParams = req.body.post;
+//   var tagParams = req.body.tags;
+
+//   var tagArr = tagParams.split(",");
+
+//   var createTags = function (post) {
+//     if (tagArr.length === 0) {
+//       res.redirect("/posts");
+//     } else {
+//       var tagObj = {name: tagArr.pop()};
+//       db.Tag.findOrCreate({
+//         where: tagObj,
+//         defaults: tagObj
+//       }).done(function (err, tag, created) {
+//         post.addTag(tag);
+//         createTags(post);
+//       });
+//     }
+//   };
+
+//   var createPost = function(err, author, created) {
+//     db.Post.create(postParams).done(function(err, post) {
+//       author.addPost(post).done(function () {
+//         createTags(post);
+//       });
+//     });
+//   };
+//end
+
 app.get("*",function(req,res){
   res.status(404);
   res.render("404");
