@@ -12,20 +12,20 @@
           <div class="panel-heading">
               <h5 class="panel-title"><%= dog.name %></h5>
 
-              <form class="favorite-form" action="/dogsusers" method="POST">
+              <form class="favorite-form" action="/users/favorites" method="POST">
                 <input type="hidden" name="DogId" value="<%= dog.id %>">
                 <button type="submit"><span class=" reset glyphicon glyphicon-star-empty"></span></button>
               </form>
           </div>
           <div class="panel-body">
             <ul>
-              <li><p>Breed: <%= dog.breed %></p></li>
-              <li><p>Age: <%= dog.age %></p></li>
-              <li><p>Walkies needs:<%= dog.walkiesNeeds %></p></li>
-              <li><p>Guilty pleasure:<%= dog.guiltyPleasure %></p></li>
-              <li><p>About:<%= dog.about %></p></li>
-
-          </ul>
+              <li><h6>Breed: <%= dog.breed %></h6></li></span>
+              <li><h6>Age: <%= dog.age %></h6></li>
+              <li><h6>Walkies needs: <%= dog.walkiesNeeds %></p></li>
+              <li><h6>Guilty pleasure: <%= dog.guiltyPleasure %></h6></li>
+              <li><h6>About: <%= dog.about %></h6></li>
+              <a href="../users/show/<%= dogs[i].User.id %>">See owner profile.</a>
+              </ul>
           <img class="profilepic" src="<%= dog.pictureUrl %>">
           </div>
         </div>
@@ -34,4 +34,3 @@
       <% }) %>
 <% } %>
 <% include ../partials/footer  %>
-

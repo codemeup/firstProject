@@ -1,22 +1,26 @@
 <% include ../partials/header  %>
     <h1>USER PROFILE</h1>
 
-    <div>
-      <h2><%= user.name %></h2>
-      <ul>
-      	<li>Favorite Breed: <%= user.favoriteBreed %></li>
-      	<li>About: <%= user.about %></li>
-      	<li>Contact Number: <%= user.contactNumber %></li>
-      	<li>Contact Email: <%= user.contactEmail %></li>
-      </ul>
-    </div>
-    <div>
-    <% user.Dogs.forEach(function (dog, index) { %>
-    <div>
-      <h2><a href="/dogs/<%=dog.id%>"><%= dog.name %></a></h2>
-      <img class="profilepic" src="<%= dog.pictureUrl %>">
-    </div>
-    <% }) %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h5 class="panel-title"><%= user.name %></h5>
+         </div>
+          <div class="panel-body">
+            <ul>
+            	<li><h6>Favorite Breed: <%= user.favoriteBreed %></h6></li>
+            	<li><h6>About: <%= user.about %></h6></li>
+            	<li><h6>Contact Number:  <%= user.contactNumber %></h6></li>
+            	<li><h6>Contact Email:  <%= user.contactEmail %></h6></li>
+            </ul>
+          <% user.Dogs.forEach(function (dog, index) { %>
+          <div>
+            <h5><%= dog.name %></h5>
+      <!--       <h2><a href="/dogs/<%=dog.id%>"><%= dog.name %></a></h2> -->
+            <img class="profilepic" src="<%= dog.pictureUrl %>">
+          </div>
+          <% }) %>
+          </div>
+        </div>
+
 
 <% include ../partials/footer  %>
-

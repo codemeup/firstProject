@@ -7,13 +7,9 @@
               <h5 class="panel-title"><%= user.name %></h5>
           </div>
           <div class="panel-body">
-            <ul>
-              <li><p>Favorite breed: <%= user.favoriteBreed %></p></li>
-               <li><p>Contact number: <%= user.contactNumber %></p></li>
-              <li><p>Contact email: <%= user.contactEmail %></p></li>
-              <li><p>Street address:<%= user.streetAddress %></p></li>
-              <li><p>ZIP code:<%= user.zipCode %></p></li>
-          </ul>
+              <h5><%= user.about %></h5>
+              <h2><a href="/users/show/<%=user.id%>">See full profile</a></h2>
+
           </div>
         </div>
       <% }) %>

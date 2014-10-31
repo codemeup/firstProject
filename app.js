@@ -247,7 +247,7 @@ app.post('/dogs', function(req, res){
                   UserId: userId,
                   pictureUrl: pictureUrl,
                 });
-  res.redirect('/homepage');  
+  res.redirect('/dogs/index');  
 });
 
 //show all users
@@ -263,7 +263,6 @@ app.get('/users/index', routeMiddleware.checkAuthentication, function(req, res){
 //show the user and list their dogs
 app.get('/users/show/:id', routeMiddleware.checkAuthentication, function(req, res){
   console.log("THIS IS ID",req.params.id);
-
   db.User.find({
       where: {id:req.params.id},
       include: [db.Dog]
@@ -303,10 +302,10 @@ app.get('/dogs/show/:id', routeMiddleware.checkAuthentication, function(req, res
 
 //favorite dog - add to join table
 app.get('/dogs/index', routeMiddleware.checkAuthentication, function(req, res){
-  res.render('dogsusers', { user: req.user, dog: req.dog });
+  res.render('/users/favorites', { user: req.user, dog: req.dog });
 });
 
-app.post('/dogsusers', function(req, res){
+app.post('users/favorites/:id', function(req, res){
   var UserId = req.user.id;
   var DogId = req.body.DogId;
 
