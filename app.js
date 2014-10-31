@@ -305,7 +305,8 @@ app.get('/dogs/show/:id', routeMiddleware.checkAuthentication, function(req, res
 app.get('/dogs/index', routeMiddleware.checkAuthentication, function(req, res){
   res.render('dogsusers', { user: req.user, dog: req.dog });
 });
-app.post('/dogsusers/:id', function(req, res){
+
+app.post('/dogsusers', function(req, res){
   var UserId = req.user.id;
   var DogId = req.body.DogId;
 
