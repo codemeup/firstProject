@@ -14,6 +14,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Dog.belongsTo(models.User);
+        Dog.hasMany(models.User, {as: "Favorite"});
       }
     }
   });

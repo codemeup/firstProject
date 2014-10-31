@@ -60,3 +60,8 @@ a{
 	border-color: #33CCFF;
 	outline-color: #33CCFF;
 }
+.favorite-form > button {
+	background: none;
+	border: none;
+	outline: 0;
+}

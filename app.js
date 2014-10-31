@@ -95,14 +95,14 @@ passport.use(new FacebookStrategy({
 
     process.nextTick(function () {
       console.log("nextTick Ran", profile);
-      console.log(profile, "FACEBOOK PROFILE OPJECT RETURNING");
+      console.log(profile, "FACEBOOK PROFILE OBJECT RETURNING");
       db.User.findOrCreate({
         where:{
           fbid: profile.id,
           name: profile.displayName,
           // contactEmail: profile.emails
-          birthday: profile.birthday,
-          photo: profile.photos
+          // birthday: profile.birthday,
+          // photo: profile.photos
         }
       }).done(function(err,user){
         console.log("done Ran");
@@ -237,7 +237,6 @@ app.post('/dogs', function(req, res){
                   pictureUrl: pictureUrl,
                 });
   res.redirect('/homepage');  
-
 });
 
 //show all users
@@ -276,8 +275,6 @@ app.get('/homepage', routeMiddleware.checkAuthentication, function(req, res){
 app.get('/dogs/index', routeMiddleware.checkAuthentication, function(req, res){
   var dogs = [];
   db.Dog.findAll({include:[db.User]}).done(function(err, dogs){
-    console.log("DD:"+dogs[0].User.name);
-    
     res.render('Dogs/index', { dogs: dogs});
   }); 
 });
@@ -291,6 +288,22 @@ app.get('/dogs/show/:id', routeMiddleware.checkAuthentication, function(req, res
     console.log(thisDog, "HERE IS THIS DOG");
     res.render('Dogs/show', { dog: thisDog });
   }); 
+});
+
+//favorite dog - add to join table
+app.get('/dogs/index', routeMiddleware.checkAuthentication, function(req, res){
+  res.render('dogsusers', { user: req.user, dog: req.dog });
+});
+app.post('/dogsusers', function(req, res){
+  console.log("HEY DOG");
+  var UserId = req.user.id;
+  var DogId = req.body.DogId;
+  
+  console.log("posting favorite details " + UserId + DogId);
+  db.DogsUsers.create({DogId:DogId,
+                  UserId:UserId,
+                });
+  res.redirect('/dogs/index');  
 });
 
 //404 page
